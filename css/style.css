@@ -3,6 +3,7 @@
   --white: #ffffff;
   --gray-300: #E1E1E6;
   --gray-700: #7C7C8A;
+  --gray-800: #4E5455;
   --green-300: #4A808C;
   --green-500: #065E7C;
   --green-700: #092D38;
@@ -156,4 +157,25 @@ table tbody tr td button:hover{
 .hide{
   opacity: 0;
   z-index: 9;
+}
+.empty.hide {
+  display: none;
+}
+.empty{
+  min-height: 40rem;
+  background: var(--green-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6rem;
+}
+.empty img {
+  height: 13.2rem;
+  width: 13.2rem;
+}
+.empty h3 {
+  color: var(--gray-800);
+  font-family: 'Roboto Mono';
+  font-size: 4rem;
+  line-height: 2.4rem;
 }

@@ -1,42 +1,5 @@
 import * as elements from '../utils/elements.js';
-import {displayError} from '../utils/errorHandler.js';
-import {GithubUserData} from './GithubUserData.js';
-
-export class FavoritesHandler{
-  constructor(){
-    this.load();
-  };
-  async addEntry(username){
-    try{
-      const entryAlreadyExists = this.entries.find(entry => entry.login === username);
-      if(entryAlreadyExists){
-        throw new Error('Essa conta já está na sua lista de favoritos.');
-      }
-      const userdata = await GithubUserData.search(username);
-      if(userdata.login === undefined){
-        throw new Error('Usuário não encontrado...');
-      }
-      this.entries = [userdata, ...this.entries];
-      this.updateRows();
-      this.save();
-      
-    }catch(error){
-      displayError(error.message);
-    };
-  };
-  deleteEntry(entry){
-    const filteredEntries = this.entries.filter(user => entry !== user);
-    this.entries = filteredEntries;
-    this.updateRows();
-    this.save();
-  };
-  load(){
-    this.entries = JSON.parse(localStorage.getItem('@github-cached:')) || [];
-  };
-  save(){
-    localStorage.setItem('@github-cached:', JSON.stringify(this.entries));
-  }
-};
+import { FavoritesHandler } from "./UserHandler.js"; './TableHandler.js';
 
 export class CreateTable extends FavoritesHandler{
   constructor(){
@@ -53,6 +16,12 @@ export class CreateTable extends FavoritesHandler{
   };
   updateRows(){
     this.clearRows();
+    if(this.entries.length === 0){
+      console.log(this.entries.length)
+      elements.root.querySelector('main .empty').classList.toggle('hide');
+    }else{
+      elements.root.querySelector('main .empty').classList.add('hide');
+    }
     this.entries.forEach((entry) => {
       const tr = document.createElement('tr');
       const tbody = document.querySelector('tbody');
